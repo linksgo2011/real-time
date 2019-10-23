@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Real time system</title>
+</head>
+
+<body>
+<noscript><h1>your device is not support websocket</h1></noscript>
+
+<div id="app">
+    <textarea :value="content" v-model="content" cols="30" rows="10" @change="handleChange"></textarea>
+</div>
+
+<script th:src="@{sockjs.min.js}"></script>
+<script th:src="@{stomp.min.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<script type="text/javascript">
+
+    var stompClient = null;
+    var vueInstance = new Vue({
+        el: '#app',
+        data: {
+            content: 'Hello Vue!'
+        },
+        methods: {
+            handleChange: function () {
+                stompClient.send("/topic", {}, JSON.stringify({
+                    payload: this.content
+                }));
+            }
+        }
+    })
+
+    initWebSocket()
+
+    function initWebSocket() {
+        if (stompClient != null) {
+            stompClient.disconnect();
+        }
+        connect();
+    }
+
+    function connect() {
+        var socket = new SockJS('/socket');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function () {
+            stompClient.subscribe('/topic', function (response) {
+                vueInstance.content = JSON.parse(response.body).payload;
+            });
+        });
+    }
+
+</script>
+</body>
+</html>

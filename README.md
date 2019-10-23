@@ -1,2 +1,32 @@
 # real-time
-A real-time system with kafka/mongo/java
+
+A real-time web system with kafka/mongo/spring boot.
+
+## tech stack 
+
+- WebSocket
+- Kafka
+- Spring boot
+- MongoDB
+
+## TODO
+
+- Persis message to MongoDB
+- Write architecture diagram
+
+
+## How to run it
+
+Run docker to start kafka
+
+> docker-compose -f docker-compose.yml up -d
+
+Run spring boot application
+
+> ./gradlew bootrun
+
+Visit Url  http://localhost:8080 
+
+## References
+
+- http://www.paper.edu.cn/releasepaper/content/4619472
