@@ -1,0 +1,14 @@
+server:
+  port: 8080
+
+logging.file: logs/application.log
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: group-1
