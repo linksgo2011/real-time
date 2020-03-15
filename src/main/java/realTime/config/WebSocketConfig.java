@@ -7,18 +7,18 @@ import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
-import static realTime.constants.Constants.KAFKA_LISTENER_TOPIC;
 import static realTime.constants.Constants.WEB_SOCKET_CONNECT_ENDPOINT;
 import static realTime.constants.Constants.WEB_SOCKET_SIMPLE_BROKER;
 
 @Configuration
 @EnableWebSocketMessageBroker
-public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
+public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry stompEndpointRegistry) {
-        stompEndpointRegistry.addEndpoint(WEB_SOCKET_CONNECT_ENDPOINT).withSockJS();
+        stompEndpointRegistry.addEndpoint(WEB_SOCKET_CONNECT_ENDPOINT).setAllowedOrigins("*").withSockJS();
     }
 
     @Override
